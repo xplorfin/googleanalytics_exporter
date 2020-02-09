@@ -1,4 +1,4 @@
-project_name: googleanalytics_exporter
+project_name: ganalytics
 env:
   - GO111MODULE=on
 before:
