@@ -23,9 +23,9 @@ jobs:
           name: go fmt
           command: |
             export WORKPATH=/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH build_image mod tidy
-            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH build_image fmt ./...
-            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH build_image mod vendor
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser mod tidy
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser fmt ./...
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser mod vendor
       - run:
           name: Tidy up
           command: |
