@@ -103,10 +103,11 @@ nfpms:
       - rpm
     dependencies:
       - git
-snapcrafts:
-  - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-    summary: Deliver Go binaries as fast and easily as possible
-    description: Prometheus Google Analytics Exporter
-    grade: stable
-    confinement: classic
-    publish: true
+# TODO: ATTENTION: Currently, the provided docker image does not support the generation of snapcraft packages. @goreleaser
+#snapcrafts:
+#  - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+#    summary: Deliver Go binaries as fast and easily as possible
+#    description: Prometheus Google Analytics Exporter
+#    grade: stable
+#    confinement: classic
+#    publish: true

@@ -14,6 +14,9 @@ jobs:
             - "8f:6b:bb:e6:82:aa:7c:39:df:c2:d1:28:82:1b:f6:54"
       - checkout
       - run:
+          name: Create build image
+          command: docker build -f docker/Dockerfile.build
+      - run:
           name: setup git
           command: git branch --set-upstream-to origin $CIRCLE_BRANCH
       - run:
@@ -50,7 +53,7 @@ jobs:
       - run:
           name: Go release
           command: |
-            docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -w /go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -e CIRCLE_PROJECT_REPONAME -e GITHUB_TOKEN goreleaser/goreleaser release --rm-dist
+            docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -w /go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -e CIRCLE_PROJECT_REPONAME -e GITHUB_TOKEN -e DOCKER_USERNAME -e DOCKER_PASSWORD -e DOCKER_REGISTRY goreleaser/goreleaser release --rm-dist
       - run:
           name: Push tag
           command: |
