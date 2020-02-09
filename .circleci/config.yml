@@ -20,9 +20,6 @@ jobs:
             git config --global user.email "service+oss@entropy.engineer" && \
             git config --global user.name "Service User"
       - run:
-          name: Create build image
-          command: docker build -f docker/Dockerfile.build --build-arg GCLOUD_CONFIG --build-arg GOOGLE_PROJECT_ID -t build_image .
-      - run:
           name: go fmt
           command: |
             export WORKPATH=/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
@@ -51,7 +48,7 @@ jobs:
       - run:
           name: Go release
           command: |
-            docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -w /go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -e CIRCLE_PROJECT_REPONAME -e GITHUB_TOKEN build_image release --rm-dist
+            docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -w /go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -e CIRCLE_PROJECT_REPONAME -e GITHUB_TOKEN goreleaser/goreleaser release --rm-dist
       - run:
           name: Push tag
           command: |
