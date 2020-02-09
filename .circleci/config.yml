@@ -8,12 +8,11 @@ jobs:
   release:
     machine:
       image: ubuntu-1604:201903-01
-      docker_layer_caching: true
     steps:
-      - checkout
       - add_ssh_keys:
           fingerprints:
             - "93:57:af:18:29:8d:dc:52:44:9b:f3:8b:bd:15:2b:f1"
+      - checkout
       - run:
           name: setup git
           command: git branch --set-upstream-to origin $CIRCLE_BRANCH
