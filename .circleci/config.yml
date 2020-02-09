@@ -14,9 +14,6 @@ jobs:
             - "8f:6b:bb:e6:82:aa:7c:39:df:c2:d1:28:82:1b:f6:54"
       - checkout
       - run:
-          name: Create build image
-          command: docker build -f docker/Dockerfile.build
-      - run:
           name: setup git
           command: git branch --set-upstream-to origin $CIRCLE_BRANCH
       - run:
