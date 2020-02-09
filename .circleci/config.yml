@@ -34,7 +34,7 @@ jobs:
           command: |
             git add -A
             git commit -m "[ci skip] go mod tidy/gofmt" || true
-            git push
+            git push origin HEAD
 
       - run:
           name: Get git version
