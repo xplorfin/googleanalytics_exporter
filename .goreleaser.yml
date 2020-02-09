@@ -31,27 +31,15 @@ changelog:
       - Merge branch
 dockers:
   - image_templates:
-      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:{{ .Tag }}-cgo'
-      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:v{{ .Major }}.{{ .Minor }}-cgo'
-      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:latest-cgo'
-    dockerfile: Dockerfile.cgo
-    binaries:
-      - ganalytics
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.name={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
-    extra_files:
-      - scripts/entrypoint.sh
-  - image_templates:
       - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:{{ .Tag }}'
       - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:v{{ .Major }}.{{ .Minor }}'
       - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter:latest'
     dockerfile: Dockerfile
     binaries:
       - ganalytics
+    goos: linux
+    goarch: amd64
+    goarm: ''
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{.Date}}"
