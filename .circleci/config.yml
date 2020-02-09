@@ -1,0 +1,58 @@
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - release
+
+jobs:
+  release:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "8f:6b:bb:e6:82:aa:7c:39:df:c2:d1:28:82:1b:f6:54"
+      - checkout
+      - run:
+          name: setup git
+          command: git branch --set-upstream-to origin $CIRCLE_BRANCH
+      - run:
+          name: Identify myself
+          command: |
+            git config --global user.email "service+oss@entropy.engineer" && \
+            git config --global user.name "Service User"
+      - run:
+          name: go fmt
+          command: |
+            export WORKPATH=/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser mod tidy
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser fmt ./...
+            docker run --entrypoint "/usr/local/go/bin/go" -v $PWD:$WORKPATH -w $WORKPATH goreleaser/goreleaser mod vendor
+      - run:
+          name: Tidy up
+          command: |
+            git add -A
+            git commit -m "[ci skip] go mod tidy/gofmt" || true
+            git push origin HEAD
+
+      - run:
+          name: Get git version
+          command: |
+            docker pull gittools/gitversion:latest-linux-netcoreapp2.1 && \
+            docker run --rm -v "$(pwd):/repo" gittools/gitversion:latest-linux-netcoreapp2.1 /repo > out.version
+
+      - run:
+          name: Tag release
+          command: |
+            git tag $(jq -r '.NuGetVersion' out.version) -m "release" || true
+            git tag v$(jq -r '.NuGetVersion' out.version) -m "release" || true
+            rm -rf out.version
+      - run:
+          name: Go release
+          command: |
+            docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -w /go/src/github.com/xplorfin/$CIRCLE_PROJECT_NAME -e CIRCLE_PROJECT_REPONAME -e GITHUB_TOKEN -e DOCKER_USERNAME -e DOCKER_PASSWORD -e DOCKER_REGISTRY goreleaser/goreleaser release --rm-dist
+      - run:
+          name: Push tag
+          command: |
+            git pull
+            git push --tags || true

@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/paha/googleanalytics_exporter.svg?branch=master)](https://travis-ci.org/paha/googleanalytics_exporter)
-[![Go Report Card](https://goreportcard.com/badge/github.com/paha/googleanalytics_exporter)](https://goreportcard.com/report/github.com/paha/googleanalytics_exporter)
-[![Docker Repository on Quay](https://quay.io/repository/paha/ga-prom/status "Docker Repository on Quay")](https://quay.io/repository/paha/ga-prom)
+[![CircleCI](https://circleci.com/gh/xplorfin/googleanalytics_exporter.svg?style=svg)](https://circleci.com/gh/xplorfin/googleanalytics_exporter)
+[![Go Report Card](https://goreportcard.com/badge/github.com/xplorfin/googleanalytics_exporter)](https://goreportcard.com/report/github.com/xplorfin/googleanalytics_exporter)
 
 # Google Real Time Analytics to Prometheus
 
