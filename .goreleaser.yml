@@ -31,9 +31,9 @@ changelog:
       - Merge branch
 dockers:
   - image_templates:
-      - 'xplorfin/googleanalytics_exporter:{{ .Tag }}'
-      - 'xplorfin/googleanalytics_exporter:v{{ .Major }}.{{ .Minor }}'
-      - 'xplorfin/googleanalytics_exporter:latest'
+      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter/googleanalytics_exporter:{{ .Tag }}'
+      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter/googleanalytics_exporter:v{{ .Major }}.{{ .Minor }}'
+      - 'docker.pkg.github.com/xplorfin/googleanalytics_exporter/googleanalytics_exporter:latest'
     dockerfile: Dockerfile
     binaries:
       - ganalytics
